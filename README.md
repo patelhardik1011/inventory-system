@@ -27,12 +27,20 @@ To run this project please follow below steps:
 4. Check if docker containers are running or not using below command. This will show docker containers running on the machine.
    ````
    docker ps
-5. Copy .env.example file to .env file in the root directory 
-6. Please run following command to generate the key
+5. Copy .env.example file to .env file in the root directory
+6. Install composer using below command
+   ````
+   docker exec inventory-container composer install
+7. Please run following command to generate the key
    ````
    docker exec inventory-container php artisan key:generate
    docker exec inventory-container php artisan cache:clear
    docker exec inventory-container php artisan config:clear
+8. To access the project you will need to type following URL:
+   ````
+   http://127.0.0.1:8080
+   or
+   http://YOUR_IP:8080
 
 Here I have used sample CSV file to be stored in Storage folder and reading data from that CSV file.
 
