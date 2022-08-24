@@ -1,0 +1,39 @@
+version: '3'
+services:
+
+  #PHP Service
+  inventory-app:
+    build:
+      context: ./
+      dockerfile: Dockerfile
+    container_name: inventory-container
+    environment:
+      SERVICE_NAME: app
+      SERVICE_TAGS: dev
+    volumes:
+      - ./:/var/www
+      - ./Docker/php/local.ini:/usr/local/etc/php/conf.d/local.ini
+    networks:
+      - app-network
+
+  #Nginx Service
+  inventory-nginx-server:
+    image: nginx:alpine
+    container_name: inventory-nginx-container
+    ports:
+      - "8080:80"
+      - "333:443"
+    volumes:
+      - ./:/var/www
+      - ./Docker/nginx/conf.d/:/etc/nginx/conf.d/
+    networks:
+      - app-network
+
+#Docker Networks
+networks:
+  app-network:
+    driver: bridge
+#Volumes
+volumes:
+  dbdata:
+    driver: local
